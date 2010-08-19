@@ -18,6 +18,7 @@ object Test {
     f(config)
   }
 
+  // it seems this trait is unused
   trait AwaitFinishActor extends Actor {
     private[this] val guard = new CountDownLatch(1)
     protected def doAct(): Unit

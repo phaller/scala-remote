@@ -37,7 +37,7 @@ object Test {
       }
 
       override def act() {
-        alive(9013)
+        alive(11013)
         register('self, self)
 
         def makeBlockingConfig() = new DefaultConfiguration {

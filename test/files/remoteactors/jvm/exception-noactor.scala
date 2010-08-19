@@ -47,7 +47,7 @@ object Test {
       }
       trapExit = true
       override def act() {
-        alive(9014)
+        alive(11014)
         register('self, self)
 
         def makeConfig(select: ServiceMode.Value) = new DefaultConfiguration {
@@ -57,13 +57,13 @@ object Test {
 
         expectErrorInHandler("Blocking") {
           val cfg    = makeConfig(ServiceMode.Blocking)
-          val nobody = select(Node(9014), 'nobody)(cfg)
+          val nobody = select(Node(11014), 'nobody)(cfg)
           nobody ! "HI"
         }
 
         expectErrorInHandler("NonBlocking") {
           val cfg    = makeConfig(ServiceMode.NonBlocking)
-          val nobody = select(Node(9014), 'nobody)(cfg)
+          val nobody = select(Node(11014), 'nobody)(cfg)
           nobody ! "HI"
         }
       }

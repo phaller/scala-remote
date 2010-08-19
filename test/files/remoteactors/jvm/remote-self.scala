@@ -26,7 +26,7 @@ object Test {
 
     val guard = new CountDownLatch(1)
 
-    remoteActor(9013, 'commandresponder) {
+    remoteActor(11013, 'commandresponder) {
       guard.countDown()
       receiveWithin(5000) {
         case Command(proxy, message) =>
@@ -40,7 +40,7 @@ object Test {
 
     actor {
       val remoteSelf = remoteActorFor(self)
-      val responder = select(Node(null, 9013), 'commandresponder)
+      val responder = select(Node(null, 11013), 'commandresponder)
       responder ! Command(remoteSelf, "HELLO, WORLD")
       receiveWithin(5000) {
         case "HELLO, WORLD" =>

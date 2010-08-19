@@ -21,7 +21,7 @@ object Test {
 
     val guard = new CountDownLatch(3) 
 
-    val a1 = remoteActor(9008, 'a1) {
+    val a1 = remoteActor(11008, 'a1) {
       guard.countDown()
       receiveWithin(5000) {
         case TIMEOUT => error(TIMEOUT)
@@ -31,24 +31,24 @@ object Test {
       }
     }
 
-    val a2 = remoteActor(9009, 'a2) {
+    val a2 = remoteActor(11009, 'a2) {
       guard.countDown()
       reactWithin(5000) {
         case TIMEOUT => error(TIMEOUT)
         case e =>
           println("A2 got message: " + e)
-          val a1_handle = select(Node(9008), 'a1)
+          val a1_handle = select(Node(11008), 'a1)
           a1_handle forward e
       }
     }
 
-    val a3 = remoteActor(9010, 'a3) {
+    val a3 = remoteActor(11010, 'a3) {
       guard.countDown()
       receiveWithin(5000) {
         case TIMEOUT => error(TIMEOUT)
         case e =>
         println("A3 got message: " + e)
-        val a2_handle = select(Node(9009), 'a2)
+        val a2_handle = select(Node(11009), 'a2)
         a2_handle forward e
       }
     }
@@ -56,7 +56,7 @@ object Test {
     guard.await()
 
     actor {
-      val a3_handle = select(Node(null, 9010), 'a3)
+      val a3_handle = select(Node(null, 11010), 'a3)
       a3_handle !? (5000, "FORWARD ME") match {
         case Some("FORWARD ME") =>
           println("Successfully received response")
